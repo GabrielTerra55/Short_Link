@@ -19,12 +19,12 @@ def link(request):
             new_short_link = ShortLink.objects.create(token=generate_token(), link=long_link)
             new_short_link.save()
             short_link_token = new_short_link.token
-            token = {"token": f"http://localhost:8000/token/{short_link_token}"}  # da pra enchugar
+            token = {"token": detect_url(request, short_link_token)}  # da pra enchugar
             return render(request, 'link.html', token)
 
         short_link = ShortLink.objects.get(link=long_link)
         short_link_token = short_link.token
-        token = {"token": f"http://localhost:8000/token/{short_link_token}"} # da pra enchugar
+        token = {"token": detect_url(request, short_link_token)} # da pra enchugar
         return render(request, 'link.html', token)
     
 def token(request, token):
@@ -40,6 +40,12 @@ def token(request, token):
         print('indo mandar')
         return HttpResponseRedirect(short_link.link)
 
-    return redirect(index) 
+    return redirect(index)
+
+def detect_url(request,token):
+    "host url detect"
+    host = request.get_host()
+    url = f"http://{host}/token/{token}"
+    return url
         
             

@@ -1,6 +1,7 @@
 import random
 import string
 import requests
+import validators
 
 from short_link.models import ShortLink
 
@@ -8,6 +9,9 @@ from short_link.models import ShortLink
 def validate_url(url):
     """Verification addres"""
     url = url
+    if not validators.url(url):
+        return False
+    
     response = requests.get(url)
     return response.status_code == 200
     
@@ -29,3 +33,4 @@ def generate_token(size=5, chars=string.ascii_uppercase + string.digits + string
         if not ShortLink.objects.filter(token=token).exists():
             break
     return token
+
