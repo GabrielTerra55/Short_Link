@@ -1,13 +1,14 @@
-from django.shortcuts import render
-from short_link.models import ShortLink
+from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect
 
+from short_link.models import ShortLink
 from short_link.validators import *
 
 def index(request):
     return render(request, 'index.html')
 
 def link(request):
-    if request.POST:
+    if request.method == 'POST':
         long_link = request.POST['link']
 
         if not validate_url(long_link):
@@ -18,16 +19,27 @@ def link(request):
             new_short_link = ShortLink.objects.create(token=generate_token(), link=long_link)
             new_short_link.save()
             short_link_token = new_short_link.token
-            token = {"token": short_link_token}
-            return render(request, 'link.html', short_link)
+            token = {"token": f"http://localhost:8000/token/{short_link_token}"}  # da pra enchugar
+            return render(request, 'link.html', token)
 
         short_link = ShortLink.objects.get(link=long_link)
         short_link_token = short_link.token
-        token = {"token": short_link_token}
+        token = {"token": f"http://localhost:8000/token/{short_link_token}"} # da pra enchugar
         return render(request, 'link.html', token)
     
-def token(request):
-    if request.GET:
-        token = request.GET['link']
+def token(request, token):
+    if token:
+        token = token
+        if not token:
+            return redirect(index)
+        
+        if not token_exist_in_database(token):
+            return redirect(index)
+        
+        short_link = ShortLink.objects.get(token=token)
+        print('indo mandar')
+        return HttpResponseRedirect(short_link.link)
+
+    return redirect(index) 
         
             

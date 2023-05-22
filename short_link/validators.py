@@ -16,7 +16,10 @@ def exist_url_in_database(url):
     url = url
     return ShortLink.objects.filter(link=url).exists() 
         
-
+def token_exist_in_database(token):
+    """Verification if exist the token in database"""
+    token = token
+    return ShortLink.objects.filter(token=token).exists() 
 
 def generate_token(size=5, chars=string.ascii_uppercase + string.digits + string.ascii_lowercase):
     """token generation and verification if token exist in database"""
