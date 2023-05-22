@@ -33,4 +33,3 @@ def generate_token(size=5, chars=string.ascii_uppercase + string.digits + string
         if not ShortLink.objects.filter(token=token).exists():
             break
     return token
-

@@ -47,5 +47,3 @@ def detect_url(request,token):
     host = request.get_host()
     url = f"http://{host}/token/{token}"
     return url
-        
-            
