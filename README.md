@@ -6,7 +6,7 @@ Neste repositorio foi feito uma aplicação Monolitica que consegue gerar links 
  O intuito desse projeto é desenvolver bons fundamentos em algoritimos, boa pratica de programação (metodos e atributos e organização dos folders), reforçar os fundamentos do Django e como o framework funciona.
 </p>
 <h2>Instalação</h2>
-<p>para fazer a instalação da aplicação você deve ter o python 3 instalado na sua maquin, além de ser recomendável a criação de um ambiente virtual de desenvolvimento 'venv'</p>
+<p>para fazer a instalação da aplicação você deve ter o python 3 instalado na sua maquina, além de ser recomendável a criação de um ambiente virtual de desenvolvimento 'venv'</p>
 Passo 1- instale as dependencias necessarias da aplicação.<br>
  SO Windows
 	
